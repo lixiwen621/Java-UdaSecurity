@@ -13,6 +13,9 @@
     <url>http://www.example.com</url>
     <modules>
         <module>Constant-Module</module>
+        <module>Image-Module</module>
+        <module>Security-Module</module>
+        <module>Application-Module</module>
     </modules>
 
 
