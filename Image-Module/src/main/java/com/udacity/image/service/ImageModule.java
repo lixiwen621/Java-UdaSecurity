@@ -3,6 +3,7 @@ package com.udacity.image.service;
 import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import com.udacity.constant.common.Constants;
+import com.udacity.image.config.encryptedAwsConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,10 +49,16 @@ public class ImageModule extends AbstractModule {
         } catch (IOException e) {
             throw new RuntimeException("Error loading AWS properties", e);
         }
-
         String awsId = props.getProperty("aws.id");
         String awsSecret = props.getProperty("aws.secret");
         String awsRegion = props.getProperty("aws.region");
+        try {
+            String decryptKey = props.getProperty("decrypt.key");
+            awsId = encryptedAwsConfig.decryptAws(decryptKey, awsId);
+            awsSecret = encryptedAwsConfig.decryptAws(decryptKey, awsSecret);
+        }catch (Exception e){
+            throw new RuntimeException("decryptAws Fail");
+        }
 
         AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(awsId, awsSecret);
         return RekognitionClient.builder()
