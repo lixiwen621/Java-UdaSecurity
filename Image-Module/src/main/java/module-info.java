@@ -7,6 +7,7 @@ module com.udacity.image {
     requires com.udacity.constant;
     requires software.amazon.awssdk.auth;
     requires software.amazon.awssdk.regions;
+    requires com.google.gson;
     exports com.udacity.image.service;
 
 }
